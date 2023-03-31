@@ -22,6 +22,8 @@
       <root url="jar://$PROJECT_DIR$/lib/jcert.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/naming-resources.jar!/" />
+    </SOURCES>
   </library>
 </component>
