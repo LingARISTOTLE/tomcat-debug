@@ -10,7 +10,11 @@ import java.io.File;
 
 public class HttpServer {
 
-  /** WEB_ROOT is the directory where our HTML and other files reside.
+  /**
+   * WEB_ROOT是我们的 HTML 和其他文件所在的目录。对于此软件包，
+   * WEB_ROOT是工作目录下的“webroot”目录。
+   * 工作目录是文件系统中调用 java 命令的位置。
+   * WEB_ROOT is the directory where our HTML and other files reside.
    *  For this package, WEB_ROOT is the "webroot" directory under the working
    *  directory.
    *  The working directory is the location in the file system
