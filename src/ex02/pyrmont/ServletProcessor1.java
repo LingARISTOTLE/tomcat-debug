@@ -11,6 +11,11 @@ import javax.servlet.ServletResponse;
 
 public class ServletProcessor1 {
 
+  /**
+   * 处理动态资源请求
+   * @param request
+   * @param response
+   */
   public void process(Request request, Response response) {
 
     String uri = request.getUri();
@@ -18,6 +23,7 @@ public class ServletProcessor1 {
     URLClassLoader loader = null;
 
     try {
+      //解析请求路径，用于获取Servlet容器
       // create a URLClassLoader
       URL[] urls = new URL[1];
       URLStreamHandler streamHandler = null;
@@ -28,6 +34,7 @@ public class ServletProcessor1 {
       // the code for forming the URL is taken from the addRepository method in
       // org.apache.catalina.loader.StandardClassLoader class.
       urls[0] = new URL(null, repository, streamHandler);
+      //创建类加载器
       loader = new URLClassLoader(urls);
     }
     catch (IOException e) {
@@ -35,6 +42,7 @@ public class ServletProcessor1 {
     }
     Class myClass = null;
     try {
+      //通过反射获取类的Class对象
       myClass = loader.loadClass(servletName);
     }
     catch (ClassNotFoundException e) {
@@ -44,7 +52,9 @@ public class ServletProcessor1 {
     Servlet servlet = null;
 
     try {
+      //尝试实例化对象
       servlet = (Servlet) myClass.newInstance();
+      //调用servlet容器的service方法处理请求
       servlet.service((ServletRequest) request, (ServletResponse) response);
     }
     catch (Exception e) {

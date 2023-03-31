@@ -37,7 +37,7 @@ public class HttpServer1 {
       System.exit(1);
     }
 
-    // Loop waiting for a request
+    // 循环等待请求
     while (!shutdown) {
       Socket socket = null;
       InputStream input = null;
@@ -47,28 +47,29 @@ public class HttpServer1 {
         input = socket.getInputStream();
         output = socket.getOutputStream();
 
-        // create Request object and parse
+        // 创建请求对象并解析
         Request request = new Request(input);
         request.parse();
 
-        // create Response object
+        // 创建响应对象
         Response response = new Response(output);
         response.setRequest(request);
 
-        // check if this is a request for a servlet or a static resource
-        // a request for a servlet begins with "/servlet/"
+        // 检查这是对 servlet 还是静态资源的请求 对 servlet 的请求以 “servlet” 开头
         if (request.getUri().startsWith("/servlet/")) {
+          //处理动态资源
           ServletProcessor1 processor = new ServletProcessor1();
           processor.process(request, response);
         }
         else {
+          //处理静态资源
           StaticResourceProcessor processor = new StaticResourceProcessor();
           processor.process(request, response);
         }
 
-        // Close the socket
+        // 直接关闭本次socket连接
         socket.close();
-        //check if the previous URI is a shutdown command
+        //检查以前的 URI 是否为关机命令
         shutdown = request.getUri().equals(SHUTDOWN_COMMAND);
       }
       catch (Exception e) {
