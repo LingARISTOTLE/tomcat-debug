@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class SessionServlet extends HttpServlet {
+public class MySessionServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     System.out.println("SessionServlet -- service");
