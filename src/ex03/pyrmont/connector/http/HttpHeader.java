@@ -2,12 +2,8 @@ package ex03.pyrmont.connector.http;
 
 /**
  * HTTP header enum type.
- *
- * @author Remy Maucherat
- * @version $Revision: 1.4 $ $Date: 2002/03/18 07:15:40 $
- * @deprecated
+ * HTTP 标头枚举类型
  */
-
 final class HttpHeader {
 
 
@@ -67,6 +63,7 @@ final class HttpHeader {
 
 
     /**
+     * 释放所有对象引用，并初始化实例变量，以准备重用此对象。
      * Release all object references, and initialize instance variables, in
      * preparation for reuse of this object.
      */
@@ -80,6 +77,7 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的名称是否等于给定的 char 数组。所有字符必须已经是小写的。
      * Test if the name of the header is equal to the given char array.
      * All the characters must already be lower case.
      */
@@ -89,13 +87,14 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的名称是否等于给定的 char 数组。所有字符必须已经是小写的。
      * Test if the name of the header is equal to the given char array.
      * All the characters must already be lower case.
      */
     public boolean equals(char[] buf, int end) {
         if (end != nameEnd)
             return false;
-        for (int i=0; i<end; i++) {
+        for (int i = 0; i < end; i++) {
             if (buf[i] != name[i])
                 return false;
         }
@@ -104,6 +103,7 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的名称是否等于给定的 char 数组。所有字符必须已经是小写的。
      * Test if the name of the header is equal to the given string.
      * The String given must be made of lower case characters.
      */
@@ -113,6 +113,7 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的值是否等于给定的 char 数组。
      * Test if the value of the header is equal to the given char array.
      */
     public boolean valueEquals(char[] buf) {
@@ -121,12 +122,13 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的值是否等于给定的 char 数组。
      * Test if the value of the header is equal to the given char array.
      */
     public boolean valueEquals(char[] buf, int end) {
         if (end != valueEnd)
             return false;
-        for (int i=0; i<end; i++) {
+        for (int i = 0; i < end; i++) {
             if (buf[i] != value[i])
                 return false;
         }
@@ -135,6 +137,7 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的值是否等于给定的字符串。
      * Test if the value of the header is equal to the given string.
      */
     public boolean valueEquals(String str) {
@@ -143,6 +146,7 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的值是否包含给定的字符数组。
      * Test if the value of the header includes the given char array.
      */
     public boolean valueIncludes(char[] buf) {
@@ -151,6 +155,7 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的值是否包含给定的字符数组。
      * Test if the value of the header includes the given char array.
      */
     public boolean valueIncludes(char[] buf, int end) {
@@ -165,7 +170,7 @@ final class HttpHeader {
             for (int i = 0; i < end; i++) {
                 if (value[i + pos] != buf[i])
                     break;
-                if (i == (end-1))
+                if (i == (end - 1))
                     return true;
             }
             pos++;
@@ -175,6 +180,7 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的值是否包含给定的字符数组。
      * Test if the value of the header includes the given string.
      */
     public boolean valueIncludes(String str) {
@@ -183,10 +189,11 @@ final class HttpHeader {
 
 
     /**
+     * 返回值中字符的索引。
      * Returns the index of a character in the value.
      */
     public int valueIndexOf(char c, int start) {
-        for (int i=start; i<valueEnd; i++) {
+        for (int i = start; i < valueEnd; i++) {
             if (value[i] == c)
                 return i;
         }
@@ -195,6 +202,7 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的名称是否等于给定标头。名称中的所有字符必须已经是小写的。
      * Test if the name of the header is equal to the given header.
      * All the characters in the name must already be lower case.
      */
@@ -204,12 +212,13 @@ final class HttpHeader {
 
 
     /**
+     * 测试标头的名称和值是否等于给定标头。名称中的所有字符必须已经是小写的。
      * Test if the name and value of the header is equal to the given header.
      * All the characters in the name must already be lower case.
      */
     public boolean headerEquals(HttpHeader header) {
         return (equals(header.name, header.nameEnd))
-            && (valueEquals(header.value, header.valueEnd));
+                && (valueEquals(header.value, header.valueEnd));
     }
 
 
@@ -227,7 +236,7 @@ final class HttpHeader {
             char val[] = name;
             int len = nameEnd;
             for (int i = 0; i < len; i++)
-                h = 31*h + val[off++];
+                h = 31 * h + val[off++];
             hashCode = h;
         }
         return h;
