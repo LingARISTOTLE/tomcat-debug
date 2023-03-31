@@ -27,10 +27,15 @@ public class Response {
     this.request = request;
   }
 
+  /**
+   * 根据请求的资源进行写回操作
+   * @throws IOException
+   */
   public void sendStaticResource() throws IOException {
     byte[] bytes = new byte[BUFFER_SIZE];
     FileInputStream fis = null;
     try {
+      //读取静态资源
       File file = new File(HttpServer.WEB_ROOT, request.getUri());
       if (file.exists()) {
         fis = new FileInputStream(file);
@@ -41,6 +46,7 @@ public class Response {
         }
       }
       else {
+        //打印异常信息
         // file not found
         String errorMessage = "HTTP/1.1 404 File Not Found\r\n" +
           "Content-Type: text/html\r\n" +

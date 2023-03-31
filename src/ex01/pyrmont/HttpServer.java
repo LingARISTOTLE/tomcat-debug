@@ -42,28 +42,34 @@ public class HttpServer {
     }
 
     // Loop waiting for a request
+    //循环等待请求
     while (!shutdown) {
       Socket socket = null;
       InputStream input = null;
       OutputStream output = null;
       try {
+        //循环接收
         socket = serverSocket.accept();
+        //获取输入输出流
         input = socket.getInputStream();
         output = socket.getOutputStream();
 
         // create Request object and parse
         Request request = new Request(input);
+        //解析请求（这里还是由Request解析）
         request.parse();
 
         // create Response object
         Response response = new Response(output);
         response.setRequest(request);
+        //根据请求资源进行写回操作
         response.sendStaticResource();
 
         // Close the socket
         socket.close();
 
         //check if the previous URI is a shutdown command
+        //当用户访问/SHUTDOWN时，终止服务器
         shutdown = request.getUri().equals(SHUTDOWN_COMMAND);
       }
       catch (Exception e) {
