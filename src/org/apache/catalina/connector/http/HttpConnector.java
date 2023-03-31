@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.UnrecoverableKeyException;
 import java.security.KeyManagementException;
+
 import org.apache.catalina.Connector;
 import org.apache.catalina.Container;
 import org.apache.catalina.Lifecycle;
@@ -39,8 +40,7 @@ import org.apache.catalina.util.StringManager;
  */
 
 
-public final class HttpConnector
-    implements Connector, Lifecycle, Runnable {
+public final class HttpConnector implements Connector, Lifecycle, Runnable {
 
 
     // ----------------------------------------------------- Instance Variables
@@ -110,8 +110,7 @@ public final class HttpConnector
     /**
      * Descriptive information about this Connector implementation.
      */
-    private static final String info =
-        "org.apache.catalina.connector.http.HttpConnector/1.0";
+    private static final String info = "org.apache.catalina.connector.http.HttpConnector/1.0";
 
 
     /**
@@ -199,8 +198,7 @@ public final class HttpConnector
     /**
      * The string manager for this package.
      */
-    private StringManager sm =
-        StringManager.getManager(Constants.Package);
+    private StringManager sm = StringManager.getManager(Constants.Package);
 
 
     /**
@@ -821,12 +819,9 @@ public final class HttpConnector
     private void log(String message) {
         Logger logger = container.getLogger();
         String localName = threadName;
-        if (localName == null)
-            localName = "HttpConnector";
-        if (logger != null)
-            logger.log(localName + " " + message);
-        else
-            System.out.println(localName + " " + message);
+        if (localName == null) localName = "HttpConnector";
+        if (logger != null) logger.log(localName + " " + message);
+        else System.out.println(localName + " " + message);
 
     }
 
@@ -834,17 +829,15 @@ public final class HttpConnector
     /**
      * Log a message on the Logger associated with our Container (if any).
      *
-     * @param message Message to be logged
+     * @param message   Message to be logged
      * @param throwable Associated exception
      */
     private void log(String message, Throwable throwable) {
 
         Logger logger = container.getLogger();
         String localName = threadName;
-        if (localName == null)
-            localName = "HttpConnector";
-        if (logger != null)
-            logger.log(localName + " " + message, throwable);
+        if (localName == null) localName = "HttpConnector";
+        if (logger != null) logger.log(localName + " " + message, throwable);
         else {
             System.out.println(localName + " " + message);
             throwable.printStackTrace(System.out);
@@ -853,7 +846,7 @@ public final class HttpConnector
     }
 
 
-    /**
+    /**创建并返回适合处理 HTTP 请求并返回相应响应的新处理器。
      * Create and return a new processor suitable for processing HTTP
      * requests and returning the corresponding responses.
      */
@@ -881,22 +874,18 @@ public final class HttpConnector
      * address has been specified, the socket will be opened only on that
      * address; otherwise it will be opened on all addresses.
      *
-     * @exception IOException                input/output or network error
-     * @exception KeyStoreException          error instantiating the
-     *                                       KeyStore from file (SSL only)
-     * @exception NoSuchAlgorithmException   KeyStore algorithm unsupported
-     *                                       by current provider (SSL only)
-     * @exception CertificateException       general certificate error (SSL only)
-     * @exception UnrecoverableKeyException  internal KeyStore problem with
-     *                                       the certificate (SSL only)
-     * @exception KeyManagementException     problem in the key management
-     *                                       layer (SSL only)
+     * @throws IOException               input/output or network error
+     * @throws KeyStoreException         error instantiating the
+     *                                   KeyStore from file (SSL only)
+     * @throws NoSuchAlgorithmException  KeyStore algorithm unsupported
+     *                                   by current provider (SSL only)
+     * @throws CertificateException      general certificate error (SSL only)
+     * @throws UnrecoverableKeyException internal KeyStore problem with
+     *                                   the certificate (SSL only)
+     * @throws KeyManagementException    problem in the key management
+     *                                   layer (SSL only)
      */
-    private ServerSocket open()
-    throws IOException, KeyStoreException, NoSuchAlgorithmException,
-           CertificateException, UnrecoverableKeyException,
-           KeyManagementException
-    {
+    private ServerSocket open() throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException, KeyManagementException {
 
         // Acquire the server socket factory for this Connector
         ServerSocketFactory factory = getFactory();
@@ -918,8 +907,7 @@ public final class HttpConnector
             try {
                 return (factory.createSocket(port, acceptCount, is));
             } catch (BindException be) {
-                throw new BindException(be.getMessage() + ":" + address +
-                                        ":" + port);
+                throw new BindException(be.getMessage() + ":" + address + ":" + port);
             }
         } catch (Exception e) {
             log(sm.getString("httpConnector.noAddress", address));
@@ -951,8 +939,7 @@ public final class HttpConnector
                 socket = serverSocket.accept();
                 //                if (debug >= 3)
                 //                    log("run: Returned from serverSocket.accept()");
-                if (connectionTimeout > 0)
-                    socket.setSoTimeout(connectionTimeout);
+                if (connectionTimeout > 0) socket.setSoTimeout(connectionTimeout);
                 socket.setTcpNoDelay(tcpNoDelay);
             } catch (AccessControlException ace) {
                 log("socket accept security exception", ace);
@@ -963,8 +950,7 @@ public final class HttpConnector
                 try {
                     // If reopening fails, exit
                     synchronized (threadSync) {
-                        if (started && !stopped)
-                            log("accept error: ", e);
+                        if (started && !stopped) log("accept error: ", e);
                         if (!stopped) {
                             //                    if (debug >= 3)
                             //                        log("run: Closing server socket");
@@ -999,7 +985,7 @@ public final class HttpConnector
                 continue;
             }
 
-            // Hand this socket off to an appropriate processor
+            //将socket交给适当处理器 Hand this socket off to an appropriate processor
             HttpProcessor processor = createProcessor();
             if (processor == null) {
                 try {
@@ -1101,16 +1087,13 @@ public final class HttpConnector
     /**
      * Initialize this connector (create ServerSocket here!)
      */
-    public void initialize()
-    throws LifecycleException {
-        if (initialized)
-            throw new LifecycleException (
-                sm.getString("httpConnector.alreadyInitialized"));
+    public void initialize() throws LifecycleException {
+        if (initialized) throw new LifecycleException(sm.getString("httpConnector.alreadyInitialized"));
 
-        this.initialized=true;
+        this.initialized = true;
         Exception eRethrow = null;
 
-        // Establish a server socket on the specified port
+        // 在指定端口上建立服务器套接字
         try {
             serverSocket = open();
         } catch (IOException ioe) {
@@ -1133,8 +1116,7 @@ public final class HttpConnector
             eRethrow = kme;
         }
 
-        if ( eRethrow != null )
-            throw new LifecycleException(threadName + ".open", eRethrow);
+        if (eRethrow != null) throw new LifecycleException(threadName + ".open", eRethrow);
 
     }
 
@@ -1142,14 +1124,12 @@ public final class HttpConnector
     /**
      * Begin processing requests via this Connector.
      *
-     * @exception LifecycleException if a fatal startup error occurs
+     * @throws LifecycleException if a fatal startup error occurs
      */
     public void start() throws LifecycleException {
 
         // Validate and update our current state
-        if (started)
-            throw new LifecycleException
-                (sm.getString("httpConnector.alreadyStarted"));
+        if (started) throw new LifecycleException(sm.getString("httpConnector.alreadyStarted"));
         threadName = "HttpConnector[" + port + "]";
         lifecycle.fireLifecycleEvent(START_EVENT, null);
         started = true;
@@ -1157,10 +1137,9 @@ public final class HttpConnector
         // Start our background thread
         threadStart();
 
-        // Create the specified minimum number of processors
+        // 创建指定的最小处理器数
         while (curProcessors < minProcessors) {
-            if ((maxProcessors > 0) && (curProcessors >= maxProcessors))
-                break;
+            if ((maxProcessors > 0) && (curProcessors >= maxProcessors)) break;
             HttpProcessor processor = newProcessor();
             recycle(processor);
         }
@@ -1171,14 +1150,12 @@ public final class HttpConnector
     /**
      * Terminate processing requests via this Connector.
      *
-     * @exception LifecycleException if a fatal shutdown error occurs
+     * @throws LifecycleException if a fatal shutdown error occurs
      */
     public void stop() throws LifecycleException {
 
         // Validate and update our current state
-        if (!started)
-            throw new LifecycleException
-                (sm.getString("httpConnector.notStarted"));
+        if (!started) throw new LifecycleException(sm.getString("httpConnector.notStarted"));
         lifecycle.fireLifecycleEvent(STOP_EVENT, null);
         started = false;
 

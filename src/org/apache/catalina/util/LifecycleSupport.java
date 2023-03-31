@@ -85,11 +85,12 @@ public final class LifecycleSupport {
 
 
     /**
+     * 构造与指定的生命周期组件关联的新生命周期支持对象。
      * Construct a new LifecycleSupport object associated with the specified
      * Lifecycle component.
      *
      * @param lifecycle The Lifecycle component that will be the source
-     *  of events that we fire
+     *                  of events that we fire
      */
     public LifecycleSupport(Lifecycle lifecycle) {
 
@@ -124,20 +125,19 @@ public final class LifecycleSupport {
      */
     public void addLifecycleListener(LifecycleListener listener) {
 
-      synchronized (listeners) {
-          LifecycleListener results[] =
-            new LifecycleListener[listeners.length + 1];
-          for (int i = 0; i < listeners.length; i++)
-              results[i] = listeners[i];
-          results[listeners.length] = listener;
-          listeners = results;
-      }
+        synchronized (listeners) {
+            LifecycleListener results[] = new LifecycleListener[listeners.length + 1];
+            for (int i = 0; i < listeners.length; i++)
+                results[i] = listeners[i];
+            results[listeners.length] = listener;
+            listeners = results;
+        }
 
     }
 
 
     /**
-     * Get the lifecycle listeners associated with this lifecycle. If this 
+     * Get the lifecycle listeners associated with this lifecycle. If this
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
     public LifecycleListener[] findLifecycleListeners() {
@@ -183,14 +183,11 @@ public final class LifecycleSupport {
                     break;
                 }
             }
-            if (n < 0)
-                return;
-            LifecycleListener results[] =
-              new LifecycleListener[listeners.length - 1];
+            if (n < 0) return;
+            LifecycleListener results[] = new LifecycleListener[listeners.length - 1];
             int j = 0;
             for (int i = 0; i < listeners.length; i++) {
-                if (i != n)
-                    results[j++] = listeners[i];
+                if (i != n) results[j++] = listeners[i];
             }
             listeners = results;
         }
